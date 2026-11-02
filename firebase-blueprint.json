@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "Clinic": {
+      "title": "Clinic",
+      "description": "Hospital or clinic profile and configuration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique clinic ID" },
+        "name": { "type": "string", "maxLength": 100, "description": "Clinic name" },
+        "address": { "type": "string", "maxLength": 255, "description": "Clinic physical address" },
+        "phone": { "type": "string", "maxLength": 30, "description": "Clinic phone number" },
+        "status": { "type": "string", "enum": ["active", "inactive"], "description": "Clinic operating status" },
+        "timezone": { "type": "string", "maxLength": 50, "description": "Configurable timezone, e.g. Asia/Tashkent" },
+        "attendanceQrId": { "type": "string", "maxLength": 100, "description": "Shared attendance QR identifier" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["name", "status", "timezone", "attendanceQrId"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile with role-based access control (developer, clinic_admin, employee)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Firebase Auth UID or document ID" },
+        "fullName": { "type": "string", "maxLength": 100, "description": "Full name" },
+        "username": { "type": "string", "maxLength": 50, "description": "Unique username" },
+        "email": { "type": "string", "format": "email", "maxLength": 100, "description": "User email address" },
+        "role": { "type": "string", "enum": ["developer", "clinic_admin", "employee"], "description": "System role" },
+        "clinicId": { "type": "string", "maxLength": 100, "description": "Associated clinic ID for admin and employee" },
+        "position": { "type": "string", "maxLength": 100, "description": "Job title/position" },
+        "department": { "type": "string", "maxLength": 100, "description": "Department or branch" },
+        "phone": { "type": "string", "maxLength": 30, "description": "Phone number" },
+        "photoURL": { "type": "string", "maxLength": 500, "description": "Profile photo URL" },
+        "employeeId": { "type": "string", "maxLength": 50, "description": "Auto-generated unique employee badge number" },
+        "schedule": { "type": "string", "maxLength": 100, "description": "Work schedule description" },
+        "status": { "type": "string", "enum": ["active", "inactive"], "description": "Account status" },
+        "mustChangePassword": { "type": "boolean", "description": "Flag indicating user must reset initial password" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["fullName", "username", "email", "role", "status"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Daily employee attendance session record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Attendance record ID (YYYY-MM-DD_userId)" },
+        "userId": { "type": "string", "maxLength": 100, "description": "Employee user ID" },
+        "employeeName": { "type": "string", "maxLength": 100, "description": "Cached employee full name" },
+        "clinicId": { "type": "string", "maxLength": 100, "description": "Clinic ID" },
+        "date": { "type": "string", "format": "date", "maxLength": 20, "description": "Date string (YYYY-MM-DD)" },
+        "checkIn": { "type": "string", "format": "date-time", "description": "Check-in ISO timestamp" },
+        "checkOut": { "type": "string", "format": "date-time", "description": "Check-out ISO timestamp" },
+        "totalMinutes": { "type": "integer", "description": "Total worked minutes" },
+        "status": { "type": "string", "enum": ["present", "late", "completed"], "description": "Attendance status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["userId", "clinicId", "date", "checkIn", "status"]
+    },
+    "AttendanceQrCode": {
+      "title": "AttendanceQrCode",
+      "description": "Shared attendance QR registry document linking QR ID to clinic",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "QR identifier string" },
+        "clinicId": { "type": "string", "maxLength": 100, "description": "Clinic ID" },
+        "code": { "type": "string", "maxLength": 100, "description": "Unique QR verification token" },
+        "status": { "type": "string", "enum": ["active", "revoked"], "description": "QR code status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["clinicId", "code", "status"]
+    },
+    "SystemSetting": {
+      "title": "SystemSetting",
+      "description": "Global system configuration parameter",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Setting key identifier" },
+        "value": { "type": "string", "maxLength": 500, "description": "Config value" },
+        "description": { "type": "string", "maxLength": 255, "description": "Description in Uzbek" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["value"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Audit and activity trail for security and transparency",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Log record ID" },
+        "actorId": { "type": "string", "maxLength": 100, "description": "User UID who performed action" },
+        "actorName": { "type": "string", "maxLength": 100, "description": "Name of actor" },
+        "actorRole": { "type": "string", "maxLength": 50, "description": "Role of actor" },
+        "action": { "type": "string", "maxLength": 100, "description": "Action performed (e.g. CLINIC_CREATED, EMPLOYEE_CHECK_IN)" },
+        "details": { "type": "string", "maxLength": 500, "description": "Details in Uzbek" },
+        "clinicId": { "type": "string", "maxLength": 100, "description": "Clinic ID if applicable" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Server timestamp" }
+      },
+      "required": ["actorId", "action", "details"]
+    }
+  },
+  "firestore": {
+    "/clinics/{clinicId}": {
+      "schema": { "$ref": "#/entities/Clinic" },
+      "description": "Hospital and clinic profiles"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles with roles and clinic associations"
+    },
+    "/attendance/{attendanceId}": {
+      "schema": { "$ref": "#/entities/Attendance" },
+      "description": "Daily employee attendance records"
+    },
+    "/attendanceQrCodes/{qrId}": {
+      "schema": { "$ref": "#/entities/AttendanceQrCode" },
+      "description": "Shared clinic attendance QR code registry"
+    },
+    "/systemSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/SystemSetting" },
+      "description": "System configuration parameters"
+    },
+    "/activityLogs/{logId}": {
+      "schema": { "$ref": "#/entities/ActivityLog" },
+      "description": "System activity and audit trail"
+    }
+  }
+}

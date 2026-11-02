@@ -1,0 +1,6 @@
+{
+  "name": "Mediscan - Klinika va Xodimlar Davomati Tizimi",
+  "description": "Klinikalar, xodimlar va umumiy QR kod orqali davomatni boshqarish uchun zamonaviy tizim.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

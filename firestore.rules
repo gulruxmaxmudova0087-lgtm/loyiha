@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Test connection doc
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Clinics collection - allow read for all users, write for admins and initial setup
+    match /clinics/{clinicId} {
+      allow read, write: if true;
+    }
+
+    // Users collection - allow read/write for user management and registration
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Attendance collection - allow read/write for check-in/out and reports
+    match /attendance/{attendanceId} {
+      allow read, write: if true;
+    }
+
+    // Attendance QR Codes collection
+    match /attendanceQrCodes/{qrId} {
+      allow read, write: if true;
+    }
+
+    // System Settings collection
+    match /systemSettings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // Activity Logs collection
+    match /activityLogs/{logId} {
+      allow read, write: if true;
+    }
+
+    // Default deny for any unlisted collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
