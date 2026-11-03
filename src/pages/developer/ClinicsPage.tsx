@@ -503,8 +503,8 @@ export const ClinicsPage: React.FC<ClinicsPageProps> = ({
         <Modal
           isOpen={true}
           onClose={() => setViewingQrClinic(null)}
-          title={`${viewingQrClinic.name} - Umumiy Davomat QR Kodi`}
-          maxWidth="lg"
+          title={`${viewingQrClinic.name} - Kirish va Chiqish Davomat QR Kodlari`}
+          maxWidth="4xl"
         >
           <ClinicQrCard clinic={viewingQrClinic} />
         </Modal>

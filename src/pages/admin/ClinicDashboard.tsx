@@ -153,7 +153,7 @@ export const ClinicDashboard: React.FC<ClinicDashboardProps> = ({ onNavigate }) 
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white/15 hover:bg-white/25 text-white backdrop-blur-sm transition-colors cursor-pointer"
           >
             <QrCode className="w-4 h-4" />
-            Umumiy QR kod
+            1-Kirish & 2-Chiqish QR kodlari
           </button>
         </div>
       </div>

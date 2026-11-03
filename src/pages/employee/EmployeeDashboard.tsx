@@ -90,7 +90,7 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({ onNavigate
               className="inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl text-sm sm:text-base font-bold text-teal-950 bg-white hover:bg-teal-50 shadow-lg shadow-black/20 hover:shadow-xl transition-all transform active:scale-95 cursor-pointer"
             >
               <QrCode className="w-6 h-6 text-teal-600" />
-              <span>QR Skaner Ochiq</span>
+              <span>QR Skaner (1-Kirish / 2-Chiqish)</span>
             </button>
           </div>
         </div>
@@ -105,7 +105,7 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({ onNavigate
               Bugungi Davomat Holati
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Klinikaning umumiy QR kodini skanerlash orqali belgilanadi
+              1-Kirish yoki 2-Chiqish QR kodini skanerlash orqali belgilanadi
             </p>
           </div>
 

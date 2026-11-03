@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { QrCode, ShieldCheck, Info } from 'lucide-react';
+import { QrCode, ShieldCheck, Info, LogIn, LogOut, Download, Sparkles } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Clinic, AttendanceQrCode } from '../../types';
 import { getClinicById, getClinicQrCode } from '../../services/clinicService';
@@ -48,32 +48,49 @@ export const ClinicQrPage: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6 max-w-3xl mx-auto">
+    <div className="space-y-6 max-w-4xl mx-auto">
       <div>
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-          <QrCode className="w-5 h-5 text-teal-600" />
-          Klinika Umumiy Davomat QR Kodi
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <QrCode className="w-6 h-6 text-teal-600" />
+          Klinika Kirish va Chiqish QR Kodlari
         </h2>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-          Ushbu QR kod barcha xodimlar uchun yagona bo'lib, ishga kelish va ketishni qayd etish uchun xizmat qiladi
+        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          Klinikangiz uchun maxsus <strong>Ishga Kirish</strong> va <strong>Ishdan Chiqish</strong> QR kodlarini yuklab oling va devorga iling
         </p>
       </div>
 
-      {/* Info notice */}
-      <div className="p-4 rounded-2xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/80 flex items-start gap-3">
-        <Info className="w-5 h-5 text-teal-600 dark:text-teal-400 shrink-0 mt-0.5" />
-        <div className="text-xs text-teal-900 dark:text-teal-200 space-y-1">
-          <p className="font-bold">Muhim qoida:</p>
-          <p>
-            Har bir xodimga alohida QR kod yaratilmaydi. Ushbu QR kodni chop etib (A4 formatda), klinika kirish eshigi yoki qabulxona (resepshn) peshtaxtasiga o'rnating.
-          </p>
-          <p>
-            Xodimlar ishga kelganda o'z telefonlarida Mediscan'ni ochib ushbu kodni skaner qiladilar (Kirish qayd etiladi), ishdan ketishda esa yana shu kodni skaner qiladilar (Chiqish qayd etiladi).
-          </p>
+      {/* Guide Card */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 flex items-start gap-3">
+          <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+            <LogIn className="w-5 h-5" />
+          </div>
+          <div className="text-xs space-y-1">
+            <h4 className="font-bold text-emerald-900 dark:text-emerald-200 text-sm">
+              1. Ishga Kirish QR Kodi
+            </h4>
+            <p className="text-emerald-800 dark:text-emerald-300">
+              Klinika kirish eshigiga yoki qabulxona (resepshn)ga o'rnatiladi. Xodimlar ertalab kelganda skanerlaydi.
+            </p>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-2xl bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 flex items-start gap-3">
+          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+            <LogOut className="w-5 h-5" />
+          </div>
+          <div className="text-xs space-y-1">
+            <h4 className="font-bold text-blue-900 dark:text-blue-200 text-sm">
+              2. Ishdan Chiqish QR Kodi
+            </h4>
+            <p className="text-blue-800 dark:text-blue-300">
+              Klinika chiqish eshigiga yoki navbatchi xonasiga o'rnatiladi. Xodimlar smena yakunida ketayotganda skanerlaydi.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Render the printable & downloadable QR card */}
+      {/* Render the printable & downloadable QR card component */}
       <ClinicQrCard clinic={clinic} qrData={qrData} />
     </div>
   );
